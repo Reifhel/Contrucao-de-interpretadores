@@ -15,11 +15,15 @@ def validate_string(alfabeto, string):
 def processa_string(string, automato):
 
     if (not validate_string(automato[ALFABETO], string)):
-        return None    # Processamento do automato.
+        return None    # caso a string contenha letras nao contidas no alfabeto
         
+    # inicializando o estado atual com o estado inicial
     estado_atual = automato[ESTADO_INICIAL]
+    # percorrendo a string
     for letra in string:
+        # transição para o estado seguinte
         estado_atual = automato[TRANSITION_FUNCTION][estado_atual][letra]
+    # retornando o estado final
     return estado_atual in automato[ESTADO_FINAL]
 
 def maquina_finita(arquivo):
@@ -46,6 +50,7 @@ def maquina_finita(arquivo):
             print("{}: nao pertence".format(a[i+1]))
 
 if __name__ == '__main__':
+    # definindo o automato
     alfabeto = set(['a', 'b', 'c'])
     trans_func = {'q1' : {'a' : 'q2', 'b' : 'q2'},
                   'q2' : {'a' : 'q5', 'b' : 'q3'},
