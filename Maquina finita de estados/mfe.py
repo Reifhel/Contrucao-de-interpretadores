@@ -1,3 +1,27 @@
+
+(
+ALFABETO,
+TRANSITION_FUNCTION,
+ESTADO_INICIAL,
+ESTADO_FINAL
+) = range(4)
+
+def validate_string(alfabeto, string):
+    for letra in string:
+        if letra not in alfabeto:
+            return False
+    return True
+
+def processa_string(string, automato):
+
+    if (not validate_string(automato[ALFABETO], string)):
+        return None    # Processamento do automato.
+        
+    estado_atual = automato[ESTADO_INICIAL]
+    for letra in string:
+        estado_atual = automato[TRANSITION_FUNCTION][estado_atual][letra]
+    return estado_atual in automato[ESTADO_FINAL]
+
 def maquina_finita(arquivo):
     linhas = ""
     #lendo o arquivo
@@ -15,34 +39,24 @@ def maquina_finita(arquivo):
 
     #testando a linguagem nas palavras
     for i in range(numero):
-        print(testando_linguagem(a[i+1]))
+        x = processa_string(a[i+1], automato)
+        if x == True:
+            print("{}: pertence".format(a[i+1]))
+        else:
+            print("{}: nao pertence".format(a[i+1]))
 
-def testando_linguagem(palavra):
-    #alfabeto da linguagem
-    alfabeto = ['a','b','c']
-    #separando a palavra em letras
-    palavra_cortada = list(palavra)
+if __name__ == '__main__':
+    alfabeto = set(['a', 'b', 'c'])
+    trans_func = {'q1' : {'a' : 'q2', 'b' : 'q2'},
+                  'q2' : {'a' : 'q5', 'b' : 'q3'},
+                  'q3' : {'a' : 'q5', 'b' : 'q4'},
+                  'q4' : {'a' : 'q2', 'b' : 'q4'},
+                  'q5' : {'a' : 'q5', 'b' : 'q5'}
+                  }
+    estado_inicial = 'q1'
+    estado_final = set(['q4'])
+    automato = (alfabeto, trans_func, estado_inicial, estado_final)
 
-    try:
-        #testando se a palavra é válida
-        for i in range(len(palavra_cortada)):
-            #testando se a letra está no alfabeto
-            if palavra_cortada[i] not in alfabeto:
-                #se não estiver, a palavra não é válida e isso é retornado
-                return palavra + ": nao pertence"
-            #caso a letra seja a é veroficado caso as proximas letras são 'b'
-            elif palavra_cortada[i] == 'a':
-                if palavra_cortada[i+1] == 'b' and palavra_cortada[i+2] == 'b':
-                    #caso seja, nada ocorre
-                    pass
-                # se não for, a palavra não é válida e isso é retornado
-                else:
-                    return palavra + ": nao pertence"
-        # caso a palavra passe por toda a validação sem erro, a palavra é válida e isso é retornado
-        return palavra + ": pertence"
-    #caso ocorra erro de index
-    except IndexError:
-        return palavra + ": nao pertence" 
 
 # teste da maquina finita
 arquivo = 'texto.txt'
