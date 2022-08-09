@@ -52,10 +52,11 @@ def maquina_finita(arquivo):
 if __name__ == '__main__':
     # definindo o automato
     alfabeto = set(['a', 'b', 'c'])
-    trans_func = {'q1' : {'a' : 'q2', 'b' : 'q2', 'c' : 'q2'},
-                  'q2' : {'a' : 'q2', 'b' : 'q3', 'c' : 'q2'},
-                  'q3' : {'a' : 'q2', 'b' : 'q4', 'c' : 'q3'},
-                  'q4' : {'a' : 'q2', 'b' : 'q4', 'c' : 'q4'}
+    trans_func = {'q1' : {'a' : 'q2', 'b' : 'q3', 'c' : 'q1'},
+                  'q2' : {'a' : 'q5', 'b' : 'q3', 'c' : 'q2'},
+                  'q3' : {'a' : 'q5', 'b' : 'q4', 'c' : 'q2'},
+                  'q4' : {'a' : 'q2', 'b' : 'q4', 'c' : 'q4'},
+                  'q5' : {'a' : 'q5', 'b' : 'q5', 'c' : 'q5'}
                   }
     estado_inicial = 'q1'
     estado_final = set(['q4'])
