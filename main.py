@@ -1,0 +1,1 @@
+from parser_logico import main

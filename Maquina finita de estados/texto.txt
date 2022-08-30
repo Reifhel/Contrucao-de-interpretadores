@@ -1,6 +1,0 @@
-5
-abbabb
-abbabbab
-abbabbabb
-bbabbabbabbabb
-uabbab
