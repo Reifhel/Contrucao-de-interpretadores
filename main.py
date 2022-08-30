@@ -1,1 +1,1 @@
-from Maquina_finita_de_estados import main
+from parser_logico import main

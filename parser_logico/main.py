@@ -1,4 +1,3 @@
-import os
 import re
 
 # --------------------- Gramatica ---------------------
@@ -148,5 +147,4 @@ def main():
     arquivo.close()
 
 # --------------------- Execução ---------------------
-if __name__ == '__main__':
-    main()
+main()
