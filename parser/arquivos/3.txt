@@ -1,0 +1,6 @@
+5
+a \lor b
+T
+\neg \neg \lor T
+\lor ( a \neg b)
+\neg (a \Rightarrow b)

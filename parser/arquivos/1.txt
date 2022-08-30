@@ -1,0 +1,13 @@
+12
+\neg a
+\neg \neg
+\Leftrightarrow
+123
+a \lor (B \Rightarrow C)
+ABC123
+T \lor F
+a \Rightarrow b
+a45 \lor ( b \Rightarrow \land )
+a45 \lor ( b \Rightarrow c)
+\lor T
+F \land T
