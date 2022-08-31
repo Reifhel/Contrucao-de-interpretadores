@@ -1,13 +1,13 @@
 12
-\neg a
-\neg \neg
+\lneg a
+\lneg a b
 \Leftrightarrow
 123
-a \lor (B \Rightarrow C)
+\lor a (\lor b c)
 ABC123
 T \lor F
 a \Rightarrow b
 a45 \lor ( b \Rightarrow \land )
 a45 \lor ( b \Rightarrow c)
-\lor T
+\lor T F
 F \land T

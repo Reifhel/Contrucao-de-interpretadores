@@ -4,42 +4,42 @@ import re
 constantes = ["T", "F"]
 operadorUnario = "\lneg"
 operadoresBinario = ["\lor", "\land", "\Rightarrow", "\Leftrightarrow"]
-abreParen = "("
-fechaParen = ")"
+parenAberto = "("
+parenFechado = ")"
 
 # --------------------- Verificação de fórmulas ---------------------
 # Verifica se a fórmula é válida
-def Formula(indiceAtual, status):
+def formula(indiceAtual, validade):
 
     # indice igual a parenteses inicial
-    if expressao[indiceAtual] == abreParen:
-        status = AbreParen(indiceAtual)
+    if expressao[indiceAtual] == parenAberto:
+        validade = abreParen(indiceAtual)
 
     # indice igual a parenteses final
-    elif expressao[indiceAtual] == fechaParen:
-        status = FechaParen(indiceAtual)
+    elif expressao[indiceAtual] == parenFechado:
+        validade = fechaParen(indiceAtual)
 
     # indice igual a operador de negação
     elif expressao[indiceAtual] == operadorUnario:
-        status = FormulaUnaria(indiceAtual)
+        validade = formulaUnaria(indiceAtual)
 
     # indice igual a um operador binario
     elif expressao[indiceAtual] in operadoresBinario:
-        status = FormulaBinaria(indiceAtual)
+        validade = formulaBinaria(indiceAtual)
 
     # indice diferente de constante
     elif expressao[indiceAtual] not in constantes:
-        status = Proposicao(indiceAtual)
+        validade = proposicao(indiceAtual)
 
 
     # verificando cada caracter da fórmula
-    if status and (indiceAtual != indiceFinal):
-        status = Formula(indiceAtual + 1, status)
+    if validade and (indiceAtual != indiceFinal):
+        validade = formula(indiceAtual + 1, validade)
 
-    return status
+    return validade
 
 # verificando as preposições
-def Proposicao(indiceAtual):
+def proposicao(indiceAtual):
     result = re.search("[a-z]|[a-z]+[0-9]", expressao[indiceAtual])
 
     # caso o valor nao bata cm o regex, retorna falso
@@ -49,18 +49,18 @@ def Proposicao(indiceAtual):
     return True
 
 # função para verificar quando um parenteses abre
-def AbreParen(indiceAtual):
+def abreParen(indiceAtual):
     global contaParen
     contaParen = contaParen + 1
 
     if ((indiceAtual > indiceFinal - 1) or (expressao[indiceAtual + 1] == operadorUnario) or
-        (expressao[indiceAtual + 1] in operadoresBinario) or (expressao[indiceAtual + 1] == fechaParen) ):
+        (expressao[indiceAtual + 1] in operadoresBinario) or (expressao[indiceAtual + 1] == parenFechado) ):
         return False
 
     return True
 
 # verficação de fechaa parenteses
-def FechaParen(indiceAtual):
+def fechaParen(indiceAtual):
     global contaParen
     contaParen = contaParen - 1
 
@@ -70,9 +70,9 @@ def FechaParen(indiceAtual):
     return True
 
 # formula unaria
-def FormulaUnaria(indiceAtual):
+def formulaUnaria(indiceAtual):
     # caso indice atual seja o ultimo OU o proximo caracter seja um parenteses final OU um operador binario, retorna falso
-    if ((indiceAtual == indiceFinal) or (expressao[indiceAtual + 1] == fechaParen) or 
+    if ((indiceAtual == indiceFinal) or (expressao[indiceAtual + 1] == parenFechado) or 
                 (expressao[indiceAtual + 1] in operadoresBinario)):
         return False
 
@@ -80,9 +80,9 @@ def FormulaUnaria(indiceAtual):
     return True
 
 
-def FormulaBinaria(indiceAtual):
+def formulaBinaria(indiceAtual):
     # caso indice atual seja o ultimo OU o proximo caracter seja um parenteses final OU um operador binario, retorna falso
-    if ( (indiceAtual == indiceFinal) or (expressao[indiceAtual + 1] == fechaParen) or
+    if ( (indiceAtual == indiceFinal) or (expressao[indiceAtual + 1] == parenFechado) or
             (expressao[indiceAtual + 1] in operadoresBinario)
     ):
         return False
@@ -90,7 +90,7 @@ def FormulaBinaria(indiceAtual):
     # caso indice atual seja o primeiro OU o penultimo caracter seja um parenteses inicial OU um operador unario
     # OU um operador binario, retorna falso
     if (
-            (indiceAtual == 0) or (expressao[indiceAtual - 1] == abreParen) or (expressao[indiceAtual - 1] == operadorUnario) or
+            (indiceAtual == 0) or (expressao[indiceAtual - 1] == parenAberto) or (expressao[indiceAtual - 1] == operadorUnario) or
                                         (expressao[indiceAtual - 1] in operadoresBinario)
     ):
         return False
@@ -128,13 +128,13 @@ def main():
      # lendo cada linha do arquivo segundo a quantidade dada pela linha 1
     for i in range(int(quantidade)):
         # pegando a primeira linha do arquivo e armazenando em uma variavel
-        expressao = arquivo.readline().rstrip('\n').replace('neg', 'lneg').split()
+        expressao = arquivo.readline().rstrip('\n').split()
         # pegando a quantidade de caracteres da primeira linha
         indiceFinal = len(expressao) - 1
         # contador de parenteses
         contaParen = 0
         # verifica se a fórmula é válida
-        status = Formula(0, True)
+        status = formula(0, True)
         # apos verificar a formula, imprime a fórmula + validade
         if status and contaParen == 0:
             print(" ".join(expressao) + ' ==> Válido')

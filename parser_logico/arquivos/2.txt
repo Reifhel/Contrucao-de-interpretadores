@@ -1,8 +1,8 @@
 7
 a \lor b
-F \neg
-\neg \lor \lor T
+F \lneg
+\lneg \lor \lor T
 \lor ( a \land b)
-\land \lor a \neg b
-\neg (a \Rightarrow b)
-a a \neg F
+\land \lor a \lneg b
+\lneg (a \Rightarrow b)
+a a \lneg F
