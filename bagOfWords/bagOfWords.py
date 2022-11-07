@@ -30,7 +30,7 @@ def getWebSentence(url):
     buffer = []
 
     # regex para separar as sentenças
-    for token in re.split("[.,?!;:()]", text):
+    for token in re.split("[.,?!;:()\"]", text):
         if token != "":
             buffer.append(token)
 
